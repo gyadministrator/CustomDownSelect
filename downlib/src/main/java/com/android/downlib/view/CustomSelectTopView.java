@@ -3,11 +3,14 @@ package com.android.downlib.view;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
@@ -60,6 +63,7 @@ public class CustomSelectTopView extends HorizontalScrollView {
         removeAllViews();
         LinearLayout linearLayout = new LinearLayout(mContext);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         this.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         if (list != null && list.size() > 0) {
             for (final ContentEntity contentEntity : list) {
@@ -67,8 +71,11 @@ public class CustomSelectTopView extends HorizontalScrollView {
                     String title = contentEntity.getTitle();
                     @SuppressLint("InflateParams") final View item = LayoutInflater.from(mContext).inflate(R.layout.custom_top_select, null);
                     int h = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, getResources().getDisplayMetrics());
+                    Resources resources = this.getResources();
+                    DisplayMetrics dm = resources.getDisplayMetrics();
+                    int widthPixels = dm.widthPixels;
                     if (list.size() < 5) {
-                        item.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, h, 1));
+                        item.setLayoutParams(new LinearLayout.LayoutParams(widthPixels / list.size(), h, 1));
                     } else {
                         item.setLayoutParams(new LinearLayout.LayoutParams(2 * h, h));
                     }

@@ -24,7 +24,7 @@
     }
 
   dependencies {
-		implementation 'com.github.gyadministrator:CustomDownSelect:1.0'
+		implementation 'com.github.gyadministrator:CustomDownSelect:1.1'
 	}
   
   Maven引入方式:
