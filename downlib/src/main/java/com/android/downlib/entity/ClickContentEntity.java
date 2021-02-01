@@ -1,7 +1,5 @@
 package com.android.downlib.entity;
 
-import java.util.List;
-
 /**
  * @ProjectName: CustomDownSelect
  * @Package: com.android.downlib.entity
@@ -9,20 +7,23 @@ import java.util.List;
  * @Author: 1984629668@qq.com
  * @CreateDate: 2021/1/18 10:49
  */
-public class ContentEntity {
+public class ClickContentEntity {
     private String id;
     private String title;
-    private List<ContentItemEntity> content;
+    private ContentItemEntity content;
 
-    public List<ContentItemEntity> getContent() {
+    public ContentItemEntity getContent() {
         return content;
     }
 
-    public void setContent(List<ContentItemEntity> content) {
+    public void setContent(ContentItemEntity content) {
         this.content = content;
     }
 
-    public ContentEntity(String id, String title, List<ContentItemEntity> content) {
+    public ClickContentEntity() {
+    }
+
+    public ClickContentEntity(String id, String title, ContentItemEntity content) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -46,7 +47,7 @@ public class ContentEntity {
 
     @Override
     public String toString() {
-        return "ContentEntity{" +
+        return "ClickContentEntity{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", content=" + content +

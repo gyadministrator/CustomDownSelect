@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.downlib.R;
+import com.android.downlib.entity.ContentItemEntity;
 
 public class CommPopAdapter extends BaseContentAdapter {
     /**
@@ -46,6 +47,7 @@ public class CommPopAdapter extends BaseContentAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         ViewHolder viewHolder;
+        ContentItemEntity contentItemEntity = (ContentItemEntity) mData.get(i);
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = mInflater.inflate(
@@ -55,7 +57,7 @@ public class CommPopAdapter extends BaseContentAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.mTitleTv.setText(mData.get(i).toString());
+        viewHolder.mTitleTv.setText(contentItemEntity.getTitle());
         return convertView;
     }
 

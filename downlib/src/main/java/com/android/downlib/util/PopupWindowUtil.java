@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.PopupWindow;
 
+import com.android.downlib.entity.ContentItemEntity;
 import com.android.downlib.view.CommonFilterPop;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class PopupWindowUtil {
      * @param itemClickListener 列表项点击事件
      */
     public void showFilterPopupWindow(Activity activity, View parentView,
-                                      List<String> itemTexts,
+                                      List<ContentItemEntity> itemTexts,
                                       AdapterView.OnItemClickListener itemClickListener) {
         mPopupWindow = null;
         mActivity = activity;
@@ -106,7 +107,7 @@ public class PopupWindowUtil {
      * @param alpha             背景透明度
      */
     private void showFilterPopupWindow(View parentView,
-                                       List<String> itemTexts,
+                                       List<ContentItemEntity> itemTexts,
                                        AdapterView.OnItemClickListener itemClickListener, float alpha) {
 
         // 判断当前是否显示

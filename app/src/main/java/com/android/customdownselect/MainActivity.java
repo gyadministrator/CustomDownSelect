@@ -1,11 +1,14 @@
 package com.android.customdownselect;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.downlib.adapter.CustomPopAdapter;
+import com.android.downlib.entity.ClickContentEntity;
 import com.android.downlib.entity.ContentEntity;
+import com.android.downlib.entity.ContentItemEntity;
 import com.android.downlib.view.CustomSelectTopView;
 
 import java.util.ArrayList;
@@ -14,10 +17,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private CustomSelectTopView customSelectTopView;
     private List<ContentEntity> list = new ArrayList<>();
-    private List<String> province = new ArrayList<>();
-    private List<String> city = new ArrayList<>();
-    private List<String> town = new ArrayList<>();
-    private List<String> village = new ArrayList<>();
+    private List<ContentItemEntity> province = new ArrayList<>();
+    private List<ContentItemEntity> city = new ArrayList<>();
+    private List<ContentItemEntity> town = new ArrayList<>();
+    private List<ContentItemEntity> village = new ArrayList<>();
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +37,15 @@ public class MainActivity extends AppCompatActivity {
         city.clear();
         town.clear();
         village.clear();
-        province.add("北京市");
-        province.add("上海市");
-        province.add("天津市");
-        city.add("贵阳市");
-        city.add("成都市");
-        town.add("盘县");
-        town.add("织金县");
-        village.add("大方村");
-        village.add("珠东村");
+        province.add(new ContentItemEntity("", "北京市"));
+        province.add(new ContentItemEntity("", "上海市"));
+        province.add(new ContentItemEntity("", "天津市"));
+        city.add(new ContentItemEntity("", "贵阳市"));
+        city.add(new ContentItemEntity("", "成都市"));
+        town.add(new ContentItemEntity("", "盘县"));
+        town.add(new ContentItemEntity("", "织金县"));
+        village.add(new ContentItemEntity("", "大方村"));
+        village.add(new ContentItemEntity("", "珠东村"));
         list.add(new ContentEntity("0", "省份", province));
         list.add(new ContentEntity("1", "城市", city));
         list.add(new ContentEntity("2", "县", town));
@@ -54,7 +58,12 @@ public class MainActivity extends AppCompatActivity {
         //使用默认布局
         //customSelectTopView.setContent(list, null);
         //自定义内容adapter
-        customSelectTopView.setContent(list, new CustomPopAdapter(this));
+        customSelectTopView.setContent(list, new CustomPopAdapter(this), new CustomSelectTopView.OnItemClickListener() {
+            @Override
+            public void onClickItem(ClickContentEntity clickContentEntity) {
+                Log.e(TAG, "initData: " + clickContentEntity.toString());
+            }
+        });
     }
 
     private void initView() {

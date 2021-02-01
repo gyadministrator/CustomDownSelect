@@ -10,9 +10,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
@@ -22,6 +20,7 @@ import androidx.annotation.Nullable;
 
 import com.android.downlib.R;
 import com.android.downlib.adapter.BaseContentAdapter;
+import com.android.downlib.entity.ClickContentEntity;
 import com.android.downlib.entity.ContentEntity;
 import com.android.downlib.util.PopupWindowUtil;
 
@@ -53,13 +52,17 @@ public class CustomSelectTopView extends HorizontalScrollView {
         mContext = context;
     }
 
-    public void setContent(List<ContentEntity> list, BaseContentAdapter adapter) {
+    public void setContent(List<ContentEntity> list, BaseContentAdapter adapter, OnItemClickListener itemClickListener) {
         this.list = list;
         this.adapter = adapter;
-        init();
+        init(itemClickListener);
     }
 
-    private void init() {
+    public interface OnItemClickListener {
+        void onClickItem(ClickContentEntity clickContentEntity);
+    }
+
+    private void init(final OnItemClickListener itemClickListener) {
         removeAllViews();
         LinearLayout linearLayout = new LinearLayout(mContext);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -89,8 +92,17 @@ public class CustomSelectTopView extends HorizontalScrollView {
                                 popupWindowUtil.showFilterPopupWindow((Activity) mContext, item, contentEntity.getContent(), new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        cbItem.setText(contentEntity.getContent().get(position));
+                                        cbItem.setTag(contentEntity);
+                                        cbItem.setText(contentEntity.getContent().get(position).getTitle());
                                         popupWindowUtil.hidePopListView();
+
+                                        if (itemClickListener != null) {
+                                            ClickContentEntity clickContentEntity = new ClickContentEntity();
+                                            clickContentEntity.setId(contentEntity.getId());
+                                            clickContentEntity.setTitle(contentEntity.getTitle());
+                                            clickContentEntity.setContent(contentEntity.getContent().get(position));
+                                            itemClickListener.onClickItem(clickContentEntity);
+                                        }
                                     }
                                 });
                             } else {
@@ -98,8 +110,17 @@ public class CustomSelectTopView extends HorizontalScrollView {
                                 popupWindowUtil.showFilterPopupWindow((Activity) mContext, item, adapter, new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        cbItem.setText(contentEntity.getContent().get(position));
+                                        cbItem.setTag(contentEntity);
+                                        cbItem.setText(contentEntity.getContent().get(position).getTitle());
                                         popupWindowUtil.hidePopListView();
+
+                                        if (itemClickListener != null) {
+                                            ClickContentEntity clickContentEntity = new ClickContentEntity();
+                                            clickContentEntity.setId(contentEntity.getId());
+                                            clickContentEntity.setTitle(contentEntity.getTitle());
+                                            clickContentEntity.setContent(contentEntity.getContent().get(position));
+                                            itemClickListener.onClickItem(clickContentEntity);
+                                        }
                                     }
                                 });
                             }
